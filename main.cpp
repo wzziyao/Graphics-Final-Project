@@ -1,6 +1,4 @@
 #include <iostream>
-#include <SDL2/SDL.h>
-
 #include "Game.hpp"
 
 using namespace std;
