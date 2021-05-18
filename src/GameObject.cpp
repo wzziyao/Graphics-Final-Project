@@ -5,11 +5,14 @@ GameObject::GameObject(const char* texturesheet, int x, int y) {
     objTexture = TextureManager::LoadTexture(texturesheet);
     position.x = x;
     position.y = y;
+    velocity.x = 0;
+    velocity.y = 0;
+    
 }
 
 void GameObject::update() {
-    // position.x++;
-    // position.y++;
+    position.x += velocity.x * speed;
+    position.y += velocity.y * speed;
 
     srcRect.w = 32;
     srcRect.h = 32;

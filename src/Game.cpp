@@ -5,13 +5,11 @@
 
 using namespace std;
 
-// SDL_Texture* playerTex;
-// SDL_Rect srcR, destR;
-
 GameObject* player;
 Map* map;
 
 SDL_Renderer* Game::renderer = nullptr;
+SDL_Event Game::event;
 
 Game::Game() {}
 
@@ -39,18 +37,11 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    // SDL_Surface* tmpSurface = IMG_Load("assets/test_png.png");
-    // playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-    // SDL_FreeSurface(tmpSurface);
-
-    // playerTex = TextureManager::LoadTexture("assets/test_png.png", renderer);
-
     player = new GameObject("assets/test_png.png", 100, 100);
     map = new Map();
 }
 
 void Game::handleEvents() {
-    SDL_Event event;
     SDL_PollEvent(&event);
     switch (event.type) {
         case SDL_QUIT:
@@ -64,19 +55,53 @@ void Game::handleEvents() {
 void Game::update() {
     player->update();
 
-    // if(player->getX() > 300) {
+    // player->position.Add(Vector2D(5, 0));
+    if (Game::event.type == SDL_KEYDOWN) {
+        switch (Game::event.key.keysym.sym) {
+        case SDLK_w:
+            player->velocity.y = -1;
+            break;
+        case SDLK_a:
+            player->velocity.x = -1;
+            break;
+        case SDLK_d:
+            player->velocity.x = 1;
+            break;
+        case SDLK_s:
+            player->velocity.y = 1;
+            break;
+        default:
+            break;
+        }
+    }
+
+    if (Game::event.type == SDL_KEYUP) {
+        switch (Game::event.key.keysym.sym) {
+        case SDLK_w:
+            player->velocity.y = 0;
+            break;
+        case SDLK_a:
+            player->velocity.x = 0;
+            break;
+        case SDLK_d:
+            player->velocity.x = 0;
+            break;
+        case SDLK_s:
+            player->velocity.y = 0;
+            break;
+        default:
+            break;
+        }
+    }
+
+    // if(player->getPosition().x > 300) {
     //     player->setTex("assets/dirt.png");
     // }
-    player->position.Add(Vector2D(5, 0));
-    if(player->getPosition().x > 300) {
-        player->setTex("assets/dirt.png");
-    }
 }
 
 void Game::render() {
     SDL_RenderClear(renderer);
     // things to render
-    // SDL_RenderCopy(renderer, playerTex, NULL, &destR);
     map->DrawMap();
     player->render();
     SDL_RenderPresent(renderer);

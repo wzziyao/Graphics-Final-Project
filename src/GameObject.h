@@ -6,6 +6,9 @@
 class GameObject {
 public:
     Vector2D position;
+    Vector2D velocity;
+
+    int speed = 3;
 
     GameObject(const char* texturesheet, int x, int y);
     ~GameObject();
@@ -18,9 +21,6 @@ public:
     void setTex(const char* path);
 
 private:
-    // int xpos;
-    // int ypos;
-
     SDL_Texture* objTexture;
     SDL_Rect srcRect, destRect;
 };
