@@ -45,7 +45,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
     // playerTex = TextureManager::LoadTexture("assets/test_png.png", renderer);
 
-    player = new GameObject("assets/test_png.png", 0, 0);
+    player = new GameObject("assets/test_png.png", 100, 100);
     map = new Map();
 }
 
@@ -62,12 +62,15 @@ void Game::handleEvents() {
 }
 
 void Game::update() {
-    // count++;
-    // destR.h = 64;
-    // destR.w = 64;
-    // destR.x = count;
-    // cout << count << endl;
     player->update();
+
+    // if(player->getX() > 300) {
+    //     player->setTex("assets/dirt.png");
+    // }
+    player->position.Add(Vector2D(5, 0));
+    if(player->getPosition().x > 300) {
+        player->setTex("assets/dirt.png");
+    }
 }
 
 void Game::render() {
