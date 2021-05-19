@@ -3,6 +3,8 @@
 // #include <string>
 #include "Game.h"
 #include "Vector2D.h"
+#include "Animation.h"
+#include <map>
 
 class GameObject {
 public:
@@ -16,18 +18,26 @@ public:
 
     SDL_Rect srcRect, destRect;
 
+    // basic parameters
     int speed = 3;
     int height = 32;
     int width = 32;
     int scale = 1;
 
+    // sprite animation
     bool animated = false;
-    int frames = 4;
+    int frames = 3;
     int frame_speed = 200;
+
+    // multiple animations
+    bool multipleAnim = false;
+    int animIndex = 0;
+    std::map<const char*, Animation> animations;
+    SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
 
     GameObject();
     GameObject(int sc);
-    GameObject(const char* texturesheet, int x, int y, bool animated);
+    GameObject(const char* texturesheet, int x, int y, bool animated, bool multipleAnim);
     GameObject(const char* texturesheet, int x, int y, int h, int w, int sc);
     GameObject(const char* texturesheet, int x, int y, int h, int w, int sc, int id);
     ~GameObject();

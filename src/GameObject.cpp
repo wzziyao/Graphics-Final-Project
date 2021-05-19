@@ -10,8 +10,16 @@ GameObject::GameObject(int sc) {
     scale = sc;
 }
 
-GameObject::GameObject(const char* texturesheet, int x, int y, bool is_player) {
+GameObject::GameObject(const char* texturesheet, int x, int y, bool is_player, bool is_multiple) {
     animated = is_player;
+
+    if (is_multiple) {
+        Animation idle = Animation(0, 3, 200);
+        Animation walk = Animation(1, 8, 200);
+        animations.emplace("Idle", idle);
+        animations.emplace("Walk", walk);
+    }
+
     objTexture = TextureManager::LoadTexture(texturesheet);
     position.x = x;
     position.y = y;
@@ -60,11 +68,13 @@ void GameObject::update() {
     srcRect.w = width;
     srcRect.h = height;
     // srcRect.x = srcRect.y = 0;
-    srcRect.y = 0;
+    // srcRect.y = 0;
 
     if (animated) {
         srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / 100) % frames);
     }
+
+    srcRect.y = animIndex * height;
 
     destRect.x = static_cast<int>(position.x);
     destRect.y = static_cast<int>(position.y);
@@ -95,7 +105,7 @@ void GameObject::setTex(const char* newpath) {
 }
 
 void GameObject::render() {
-    SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
+    SDL_RenderCopyEx(Game::renderer, objTexture, &srcRect, &destRect, 0, 0, spriteFlip);
 }
 
 GameObject::~GameObject() {}

@@ -13,7 +13,7 @@ GameObject* tile1;
 GameObject* tile2;
 
 
-Map* map;
+Map* tilemap;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
@@ -46,7 +46,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    player = new GameObject("assets/player_sprite.png", 200, 160, true);
+    player = new GameObject("assets/player_anim.png", 200, 160, true, true);
     // wall = new GameObject("assets/dirt.png", 300, 300, 300, 20, 1);
     tile0 = new GameObject("assets/dirt.png", 200, 200, 32, 32, 1, 0);
     tiles.push_back(*tile0);
@@ -55,7 +55,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     // tile2 = new GameObject("assets/grass.png", 150, 150, 32, 32, 1, 2);
     // tiles.push_back(*tile2);
 
-    map = new Map();
+    tilemap = new Map();
 }
 
 void Game::handleEvents() {
@@ -83,8 +83,8 @@ void Game::update() {
     //     tiles[t].destRect.x += -(pVel.x * pSpeed);
     //     tiles[t].destRect.y += -(pVel.y * pSpeed);
     // }
-    map->dest.x += -(pVel.x * pSpeed);
-    map->dest.y += -(pVel.y * pSpeed);
+    tilemap->dest.x += -(pVel.x * pSpeed);
+    tilemap->dest.y += -(pVel.y * pSpeed);
 
     for (int i = 0; i < tiles.size(); i++) {
         if (Collision::AABB(player->collider, tiles[i].collider)) {
@@ -103,6 +103,7 @@ void Game::update() {
             break;
         case SDLK_a:
             player->velocity.x = -1;
+            player->spriteFlip = SDL_FLIP_HORIZONTAL;
             break;
         case SDLK_d:
             player->velocity.x = 1;
@@ -113,6 +114,9 @@ void Game::update() {
         default:
             break;
         }
+        player->animIndex = player->animations["Walk"].index;
+        player->frames = player->animations["Walk"].frames;
+        player->frame_speed = player->animations["Walk"].speed;
     }
 
     if (Game::event.type == SDL_KEYUP) {
@@ -122,6 +126,7 @@ void Game::update() {
             break;
         case SDLK_a:
             player->velocity.x = 0;
+            player->spriteFlip = SDL_FLIP_NONE;
             break;
         case SDLK_d:
             player->velocity.x = 0;
@@ -132,6 +137,9 @@ void Game::update() {
         default:
             break;
         }
+        player->animIndex = player->animations["Idle"].index;
+        player->frames = player->animations["Idle"].frames;
+        player->frame_speed = player->animations["Idle"].speed;
     }
 
     // if(player->getPosition().x > 300) {
@@ -141,7 +149,7 @@ void Game::update() {
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    map->DrawMap();
+    tilemap->DrawMap();
     player->render();
     // wall->render();
     tiles[0].render();
