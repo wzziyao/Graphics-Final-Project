@@ -19,7 +19,11 @@ Graphics-Final-Project $ ./play
 
 <img src="images/close-up2.gif" alt="unique" width="500"/>
 
-## Algorithms and background math
+## Unique features
+
+**Keyboard control**
+
+Use the W, A, S, and D keys on your keyboard to control the character.
 
 **Tilemap**
 
