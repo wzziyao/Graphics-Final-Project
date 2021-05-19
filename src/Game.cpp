@@ -2,10 +2,13 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 #include "Map.h"
+#include "Collision.h"
 
 using namespace std;
 
 GameObject* player;
+GameObject* wall;
+
 Map* map;
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -38,6 +41,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     }
 
     player = new GameObject("assets/test_png.png", 100, 100);
+    wall = new GameObject("assets/dirt.png", 300, 300, 300, 20, 1);
+
     map = new Map();
 }
 
@@ -54,6 +59,12 @@ void Game::handleEvents() {
 
 void Game::update() {
     player->update();
+    wall->update();
+
+    if (Collision::AABB(player->collider, wall->collider)) {
+        player->velocity * (-1);
+        std::cout << "Wall Hit!" << std::endl;
+    }
 
     // player->position.Add(Vector2D(5, 0));
     if (Game::event.type == SDL_KEYDOWN) {
@@ -104,6 +115,7 @@ void Game::render() {
     // things to render
     map->DrawMap();
     player->render();
+    wall->render();
     SDL_RenderPresent(renderer);
 }
 

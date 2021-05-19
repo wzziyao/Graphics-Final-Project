@@ -25,6 +25,12 @@ int lvl1[20][25] = {
 
 };
 
+Map::~Map() {
+    SDL_DestroyTexture(grass);
+    SDL_DestroyTexture(water);
+    SDL_DestroyTexture(dirt);
+}
+
 Map::Map() {
     dirt = TextureManager::LoadTexture("assets/dirt.png");
     grass = TextureManager::LoadTexture("assets/grass.png");

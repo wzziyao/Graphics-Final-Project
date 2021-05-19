@@ -1,29 +1,50 @@
 #include "GameObject.h"
 #include "TextureManager.h"
 
+GameObject::GameObject() {
+    position.Zero();
+}
+
+GameObject::GameObject(int sc) {
+    position.Zero();
+    scale = sc;
+}
+
 GameObject::GameObject(const char* texturesheet, int x, int y) {
     objTexture = TextureManager::LoadTexture(texturesheet);
     position.x = x;
     position.y = y;
-    velocity.x = 0;
-    velocity.y = 0;
-    
+    velocity.Zero();
+}
+
+GameObject::GameObject(const char* texturesheet, int x, int y, int h, int w, int sc) {
+    objTexture = TextureManager::LoadTexture(texturesheet);
+    position.x = x;
+    position.y = y;
+    velocity.Zero();
+    height = h;
+    width = w;
+    scale = sc;
 }
 
 void GameObject::update() {
     position.x += velocity.x * speed;
     position.y += velocity.y * speed;
 
-    srcRect.w = 32;
-    srcRect.h = 32;
-    srcRect.x = 0;
-    srcRect.y = 0;
+    srcRect.w = width;
+    srcRect.h = height;
+    srcRect.x = srcRect.y = 0;
 
-    destRect.x = (int)position.x;
-    destRect.y = (int)position.y;
+    destRect.x = static_cast<int>(position.x);
+    destRect.y = static_cast<int>(position.y);
 
-    destRect.w = srcRect.w * 2;
-    destRect.h = srcRect.h * 2; 
+    destRect.w = width * scale;
+    destRect.h = height * scale; 
+
+    collider.x = position.x;
+    collider.y = position.y;
+    collider.w = width * scale;
+    collider.h = height * scale;
 }
 
 int GameObject::getX() {
