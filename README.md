@@ -19,11 +19,11 @@ Graphics-Final-Project $ ./play
 
 <img src="images/close-up2.gif" alt="unique" width="500"/>
 
-## Data structures and background math
+## Algorithms and background math
 
 **Tilemap**
 
-A tilemap is a two-dimensional array of integers. In the tilemap I create, each integer represent a kind of landscape -- 0 is water, 1 is land, 2 is grassland. I used GIMP to create simple 32 * 32 color blocks as textiles.
+A tilemap is a two-dimensional array of integers. In the tilemap I create, each integer represents a kind of landscape -- 0 is water, 1 is land, 2 is grassland. I use GIMP to create simple 32 * 32 color blocks as textiles.
 
 **Sprite Animation**
 
@@ -55,9 +55,11 @@ A tilemap is a two-dimensional array of integers. In the tilemap I create, each 
 
 ## Next steps
 
-Good-to-have:
-- Scrollable tilemap
+I've finished the minimum required for this project. Below are some next steps I will add later.
 
-Stretch:
-- Audio
-- Entity Component System
+- Good-to-have:
+    - Scrollable tilemap
+
+- Stretch:
+    - Audio
+    - Entity Component System
