@@ -19,9 +19,13 @@ public:
     int width = 32;
     int scale = 1;
 
+    bool animated = false;
+    int frames = 4;
+    int frame_speed = 200;
+
     GameObject();
     GameObject(int sc);
-    GameObject(const char* texturesheet, int x, int y);
+    GameObject(const char* texturesheet, int x, int y, bool animated);
     GameObject(const char* texturesheet, int x, int y, int h, int w, int sc);
     GameObject(const char* texturesheet, int x, int y, int h, int w, int sc, int id);
     ~GameObject();

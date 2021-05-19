@@ -10,7 +10,8 @@ GameObject::GameObject(int sc) {
     scale = sc;
 }
 
-GameObject::GameObject(const char* texturesheet, int x, int y) {
+GameObject::GameObject(const char* texturesheet, int x, int y, bool is_player) {
+    animated = is_player;
     objTexture = TextureManager::LoadTexture(texturesheet);
     position.x = x;
     position.y = y;
@@ -58,7 +59,12 @@ void GameObject::update() {
 
     srcRect.w = width;
     srcRect.h = height;
-    srcRect.x = srcRect.y = 0;
+    // srcRect.x = srcRect.y = 0;
+    srcRect.y = 0;
+
+    if (animated) {
+        srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / 100) % frames);
+    }
 
     destRect.x = static_cast<int>(position.x);
     destRect.y = static_cast<int>(position.y);
