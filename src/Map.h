@@ -6,11 +6,11 @@ class Map {
 public: 
     Map();
     ~Map();
+    SDL_Rect src, dest;
 
     void LoadMap(int arr[20][25]);
     void DrawMap();
 private:
-    SDL_Rect src, dest;
     SDL_Texture* dirt;
     SDL_Texture* grass;
     SDL_Texture* water;

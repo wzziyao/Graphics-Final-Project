@@ -14,6 +14,8 @@ public:
     int tileID;
     std::string path;
 
+    SDL_Rect srcRect, destRect;
+
     int speed = 3;
     int height = 32;
     int width = 32;
@@ -39,5 +41,4 @@ public:
 
 private:
     SDL_Texture* objTexture;
-    SDL_Rect srcRect, destRect;
 };

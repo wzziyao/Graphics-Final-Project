@@ -46,14 +46,14 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    player = new GameObject("assets/player_sprite.png", 100, 100, true);
+    player = new GameObject("assets/player_sprite.png", 200, 160, true);
     // wall = new GameObject("assets/dirt.png", 300, 300, 300, 20, 1);
     tile0 = new GameObject("assets/dirt.png", 200, 200, 32, 32, 1, 0);
     tiles.push_back(*tile0);
     tile1 = new GameObject("assets/water.png", 250, 250, 32, 32, 1, 1);
     tiles.push_back(*tile1);
-    tile2 = new GameObject("assets/grass.png", 150, 150, 32, 32, 1, 2);
-    tiles.push_back(*tile2);
+    // tile2 = new GameObject("assets/grass.png", 150, 150, 32, 32, 1, 2);
+    // tiles.push_back(*tile2);
 
     map = new Map();
 }
@@ -74,13 +74,23 @@ void Game::update() {
     // wall->update();
     tiles[0].update();
     tiles[1].update();
-    tiles[2].update();
+    // tiles[2].update();
+
+    Vector2D pVel = player->velocity;
+    int pSpeed = player->speed;
+
+    // for (int t = 0; t < tiles.size(); t++) {
+    //     tiles[t].destRect.x += -(pVel.x * pSpeed);
+    //     tiles[t].destRect.y += -(pVel.y * pSpeed);
+    // }
+    map->dest.x += -(pVel.x * pSpeed);
+    map->dest.y += -(pVel.y * pSpeed);
 
     for (int i = 0; i < tiles.size(); i++) {
         if (Collision::AABB(player->collider, tiles[i].collider)) {
             if (tiles[i].tileID == 0 || tiles[i].tileID == 2) {
                 player->velocity * (-1);
-                std::cout << "Wall Hit!" << std::endl;
+                // std::cout << "Wall Hit!" << std::endl;
             }
         }
     }
@@ -136,7 +146,7 @@ void Game::render() {
     // wall->render();
     tiles[0].render();
     tiles[1].render();
-    tiles[2].render();
+    // tiles[2].render();
     SDL_RenderPresent(renderer);
 }
 
