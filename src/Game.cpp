@@ -8,11 +8,17 @@ using namespace std;
 
 GameObject* player;
 GameObject* wall;
+GameObject* tile0;
+GameObject* tile1;
+GameObject* tile2;
+
 
 Map* map;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
+
+std::vector<GameObject> Game::tiles;
 
 Game::Game() {}
 
@@ -42,6 +48,12 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
     player = new GameObject("assets/test_png.png", 100, 100);
     wall = new GameObject("assets/dirt.png", 300, 300, 300, 20, 1);
+    tile0 = new GameObject("assets/dirt.png", 200, 200, 32, 32, 1, 0);
+    tiles.push_back(*tile0);
+    tile1 = new GameObject("assets/water.png", 250, 250, 32, 32, 1, 1);
+    tiles.push_back(*tile1);
+    tile2 = new GameObject("assets/grass.png", 150, 150, 32, 32, 1, 2);
+    tiles.push_back(*tile2);
 
     map = new Map();
 }
@@ -60,10 +72,17 @@ void Game::handleEvents() {
 void Game::update() {
     player->update();
     wall->update();
+    tiles[0].update();
+    tiles[1].update();
+    tiles[2].update();
 
-    if (Collision::AABB(player->collider, wall->collider)) {
-        player->velocity * (-1);
-        std::cout << "Wall Hit!" << std::endl;
+    for (int i = 0; i < tiles.size(); i++) {
+        if (Collision::AABB(player->collider, tiles[i].collider)) {
+            if (tiles[i].tileID == 0 || tiles[i].tileID == 2) {
+                player->velocity * (-1);
+                std::cout << "Wall Hit!" << std::endl;
+            }
+        }
     }
 
     // player->position.Add(Vector2D(5, 0));
@@ -112,10 +131,12 @@ void Game::update() {
 
 void Game::render() {
     SDL_RenderClear(renderer);
-    // things to render
-    map->DrawMap();
+    // map->DrawMap();
     player->render();
     wall->render();
+    tiles[0].render();
+    tiles[1].render();
+    tiles[2].render();
     SDL_RenderPresent(renderer);
 }
 

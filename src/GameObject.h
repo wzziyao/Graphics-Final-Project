@@ -1,5 +1,6 @@
 #pragma once
 
+// #include <string>
 #include "Game.h"
 #include "Vector2D.h"
 
@@ -9,6 +10,9 @@ public:
     Vector2D velocity;
 
     SDL_Rect collider;
+    SDL_Rect tileRect;
+    int tileID;
+    std::string path;
 
     int speed = 3;
     int height = 32;
@@ -19,6 +23,7 @@ public:
     GameObject(int sc);
     GameObject(const char* texturesheet, int x, int y);
     GameObject(const char* texturesheet, int x, int y, int h, int w, int sc);
+    GameObject(const char* texturesheet, int x, int y, int h, int w, int sc, int id);
     ~GameObject();
 
     void update();

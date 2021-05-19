@@ -27,6 +27,31 @@ GameObject::GameObject(const char* texturesheet, int x, int y, int h, int w, int
     scale = sc;
 }
 
+GameObject::GameObject(const char* texturesheet, int x, int y, int h, int w, int sc, int id) {
+    objTexture = TextureManager::LoadTexture(texturesheet);
+    position.x = x;
+    position.y = y;
+    velocity.Zero();
+    height = h;
+    width = w;
+    scale = sc;
+    tileID = id;
+
+    switch (tileID) {
+    case 0:
+        path = "assets/water.png";
+        break;
+    case 1:
+        path = "assets/dirt.png";
+        break;
+    case 2:
+        path = "assets/grass.png";
+        break;
+    default:
+        break;
+    }
+}
+
 void GameObject::update() {
     position.x += velocity.x * speed;
     position.y += velocity.y * speed;
@@ -66,3 +91,5 @@ void GameObject::setTex(const char* newpath) {
 void GameObject::render() {
     SDL_RenderCopy(Game::renderer, objTexture, &srcRect, &destRect);
 }
+
+GameObject::~GameObject() {}

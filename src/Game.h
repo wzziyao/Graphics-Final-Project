@@ -3,6 +3,9 @@
 
 #include <SDL2/SDL.h>
 #include <iostream>
+#include <vector>
+
+class GameObject;
 
 class Game {
 public:
@@ -17,6 +20,7 @@ public:
 
     static SDL_Renderer *renderer;
     static SDL_Event event;
+    static std::vector<GameObject> tiles;
 
 private:
     bool isRunning;
