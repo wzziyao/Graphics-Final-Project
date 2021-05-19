@@ -15,21 +15,31 @@ Graphics-Final-Project $ ./play
 
 ## Demo
 
-![GAME GIF](images/game1.gif)
+<img src="images/game1.gif" alt="unique" width="500"/><br />
+
+<img src="images/close-up.gif" alt="unique" width="500"/>
 
 ## Data structures and background math
 
-**Tilemap**
+**Tile Map**
 
-A tilemap is a two-dimensional array of integers. In the tilemap I created, each integer represent a kind of landscape -- 0 is water, 1 is land, 2 is grassland. 
+A tile map is a two-dimensional array of integers. In the tile map I create, each integer represent a kind of landscape -- 0 is water, 1 is land, 2 is grassland. 
 
 **Sprite Animation**
 
-start position = image width * time since SDL library initialization % frame number
+xpos = width * time % f
+
+where xpos = start position on the x-axis,
+
+width = image width,
+
+time = time since SDL library initialization,
+
+and f = frame number
 
 **Collision Detection**
 
-<img src="images/collision_math.jpg" alt="unique" width="400"/>
+<img src="images/collision_math.jpg" alt="unique" width="500"/>
 
 A and B collide when:
 
